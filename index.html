@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Stalk profile photos of fb profiles">
+    <meta name="author" content="shivam dixit">
+    <link rel="shortcut icon" href="media/img/favicon.ico">
+
+    <title>FB Stalker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="media/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="media/css/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#" id="contact">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">FB Stalker <small>beta</small></h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Enter profile URL</h1>
+        <br>
+        <form id="form">
+        	<div class="form-group">
+        		<input type="text" class="form-control" id="url" name="url" placeholder="https://www.facebook.com/xyz">
+        	</div>
+        </form>
+
+        <p class="lead"> Tired of small thumbnail size profile photos...?</p>
+		<a class="btn btn-success" id="submit" href="#" role="button">Make It Large...</a></p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>About</h4>
+          <p>This application shows the display picture of a fb profile in full resolution even if the user has enforced privacy settings and chosen not to make profile photo public.</p><br>
+
+          <h4>Disclaimer</h4>
+          <p>This application is for EDUCATIONAL purpose ONLY. The owner is in no way responsible for any misuse of the information provided. There are no intentions to breach the privacy of users. You are responsibe for any damages caused by this application.</p>
+        </div>
+
+        <div class="col-lg-6">
+		    <h4>How</h4>
+            <p>This application exploits a flaw in Facebook CDN. This application is just an effort to bring in to notice that social networks are <strong>unreliable</strong> and why it's a bad idea to keep personal information on such sites.</p>
+
+        	<h4>Note</h4>
+        	<p>This application might break if there are updates from Facebook. In case if it is not working write to - shivamd001 at gmail dot com</p>
+        </div>
+
+      </div>
+      <div id="popup">
+      	<div class="content">
+
+      	</div>
+      </div>
+      <div id="popup2">
+      	<h2 style="color:white;">Drop in an email to shivamd001 at gmail dot com</h2>
+      </div>
+      <div class="footer">
+        <p>&copy; Shivam Dixit 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+	<!--le scripts
+	===============-->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$("#contact").click(function(){
+				$("#popup2").bPopup({opacity: 0.9});
+			});
+
+			$("#form").submit(function(e){
+				$("#submit").click();
+				return false;
+			})
+
+			$("#submit").click(function(){
+
+				$("#submit").html('Hang tight...');
+				var url = $("#url").val();
+
+				$.ajax({
+					type: "POST",
+					url: "get.php",
+					data: "url="+url,
+					dataType: "json",
+					success: function(result) {
+
+						$("#submit").html('Make It Large...');
+						if(result.status)
+						{
+							console.log(result.url);
+							$('#popup').bPopup({
+            					content:'image', //'ajax', 'iframe' or 'image'
+            					contentContainer:'.content',
+            					loadUrl: result.url
+            				});
+						}
+						else
+						{
+							alert("Some error occured.\n Make sure your url is of the form :\n https://www.facebook.com/username ");
+						}
+					}
+				});
+			});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+  		var _gaq = _gaq || [];
+  		_gaq.push(['_setAccount', 'UA-47304954-1']);
+  		_gaq.push(['_trackPageview']);
+
+  		(function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
+	</script>
+
+	<script type="text/javascript" src="media/js/bootstrap.js"></script>
+	<script type="text/javascript" src="media/js/bpopup.min.js"></script>
+  </body>
+</html>
