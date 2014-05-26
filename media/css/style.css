@@ -1,0 +1,18 @@
+.page-header {
+	margin-top: 0;
+}
+
+.panel-body {
+	padding-top: 0;
+}
+
+#footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+}
+
+body {
+	margin-bottom: 50px; /*To prevent text from going under the footer*/
+}
